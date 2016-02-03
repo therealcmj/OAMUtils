@@ -11,8 +11,7 @@ public class JPSCreds {
 
 	public static void main(String[] args) throws Exception {
 		//Path of the jps-config-jse.xml
-		System.setProperty("oracle.security.jps.config",
-		"jps-config-jse.xml");
+		System.setProperty("oracle.security.jps.config","./config/fmwconfig/jps-config-jse.xml");
 
 		String password = null;
 		JpsContext jpsContext = JpsContextFactory.getContextFactory().getContext();

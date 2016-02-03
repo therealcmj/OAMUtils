@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2011, Oracle and/or its affiliates. All rights reserved. 
+-->
+
+<project name="OAMutil" default="build" basedir=".">
+  <!--property environment="env"/-->
+
+  <property name="fmw_home" value="/home/oracle/Oracle/Middleware"/>
+  <property name="domain_home" value="${fmw_home}/user_projects/domains/OAMDomain"/>
+
+  
+
+  <dirname property="app.dir" file="${ant.file}"/>
+  <property name="build.dir" value="${app.dir}/build"/>
+
+  <path id="classpath">
+    <pathelement path="${fmw_home}/oracle_common/modules/oracle.jps_11.1.1/jps-manifest.jar"/>
+    <pathelement path="${build.dir}"/>
+  </path>
+
+
+  <target name="clean" description="Deletes the build directory">
+    <delete dir="${build.dir}"/>
+    <delete>
+      <fileset dir="." includes="**/*~"/>
+    </delete>
+  </target>
+
+  <target name="prep" description="Deletes the build directory">
+    <mkdir dir="${build.dir}"/>
+  </target>
+
+  <target name="compile" description="Compile the java code in src">
+    <javac srcdir="src" destdir="${build.dir}">
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+  
+  <target name="build" depends="clean, prep, compile"/>
+  
+  <target name="run" depends="build">
+    <java classname="JPSCreds" dir="${domain_home}" fork="true">
+      <classpath refid="classpath"/>
+    </java>
+  </target>
+
+</project>
